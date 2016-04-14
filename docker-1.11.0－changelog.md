@@ -11,7 +11,7 @@
 
 作为在生产环境中深度使用Docker的科技型公司，DaoCloud同时也踊跃参与Docker软件的开源社区，为Docker贡献代码，其中本次docker 1.11.0版本的变更日志中，有关info信息的现实，配置文件加载的验证，请求返回码的更正等多个pr，均由DaoCloud的工程师孙宏亮完成实现并合并。
 
-以下是Docker 1.11.0版本的完整变更日志。
+以下是 Docker 1.11.0版本的完整变更日志。
 
 ## 重要提示
 使用Docker 1.11.0时，和往常有很大不同的是，现在Linux平台上Docker的安装，包括4个不同的二进制文件，它们分别是：docker, docker-containerd, docker-containerd-shim 以及 docker-runc。如果在你的环境中，有一些脚本是强依赖于单独一个的docker二进制文件，使用前需要确认更新这些脚本。和Docker Daemon的交互依然和以前保持不变，而其他部分的二进制文件的使用则可以认为对用户透明。另外，在Windows平台上，二进制文件依然以单独的docker.exe形式存在。
@@ -47,7 +47,7 @@
 * 修复了当下载没有layer的镜像时会发现的恐慌错误
 * 修复了使用一个错误配置的token服务来向Docker Registry推送镜像时的恐慌
 * 当进行一个受信的镜像推送时，目前需要完成一次全面的授权工作
-* Registry的OAuth已经可以支持
+* 已经支持Registry的OAuth
 * 目前`docker login`使用docker/distribution中的实现来处理token信息
 * `docker login`不再提示输入邮箱地址
 * Docker如果没有basic auth的信息时，会自动转向docker regsitry v1
@@ -102,8 +102,8 @@
 * 修复了在关闭过程中一个网络删除后，阻止docker reload操作的Bug
 * 确保iptables链在firewalld重新加载过程中被重新创建
 * 在配置重新加载的过程中允许传入全部的数据存储仓库地址
-* 对于匿名的容器，使用为IP与名称的映射使用别名，比如：DNS PTR record
-* 当从/etc/hosts文件删除一项时，修复有可能产生的程序恐慌
+* 对于匿名的容器，对IP与名称的映射使用别名，比如：DNS PTR record
+* 修复从/etc/hosts文件删除一项时有可能产生的程序恐慌
 * 从容器的网络命名空间中找到被转发的DNS查询
 * 在docker daemon重新加载配置时，为网桥网络获取网络的内部网络模式配置
 * 在docker daemon重新加载配置时，获取原先的IPAM网络地址管理驱动
@@ -112,7 +112,7 @@
 * 修复了每次罗列插件时都会出现的文件描述符泄漏
 * 修复了面对大量数据时，authz插件有可能会使payload body崩溃的Bug
 
-## Docker Daemon运行时
+## Docker Daemon 运行时
 * 修复了通过无效的参数启动一个容器之后还原现场可能存在的程序恐慌
 * 修复了事件计时器提前停止可能出现临界区冲突
 * 修复了layer存储中存在的数据临界区问题，该问题有可能导致map对象的失效以及docker daemon进程的崩溃
@@ -120,7 +120,7 @@
 * 当用户命名空间启动时，现在可以让容器间共享NET和IPC命名空间
 * `docker inspect <image-id>`命令目前已经可以支持显示rootfs的layer
 * Windows上的Docker现在已经支持了一个top命令的最简单实现
-* 当一个容器不能通过Docker的命令启动时，Docker报告这样的错误
+* 当一个容器不能通过Docker的命令启动时，Docker将会报告这个错误
 * 如果`udev sync`不可用时，Docker将拒绝运行device mapper
 * 当配置被重新加载时，修复了不验证配置有效性的Bug
 * 修复了出现夯机的现象，当初始启动失败后的attach操作
@@ -138,7 +138,7 @@
 * 当网络参数`--net=host`时，Docker现在允许为容器再设定一个hostname
 * 当`--privileged`和新的`--userns=host`参数呗指定时，Docker目前允许运行privileged容器时使用参数`--userns-remap`
 * 当容器崩溃后重启时，修复了该情况下Docker不会清洗现场的Bug
-* 目前Docker将会报告一个错误，当重新加载配置文件时，读到一个没有定义的配置项
+* 当重新加载配置文件，读到一个没有定义的配置项时，Docker将会报告这个错误，
 * 修复了Docker Daemon重启时，容器加载过程中依赖与插件的错误
 * `docker update`操作支持更新一个容器的重启策略
 * `docker inspect`现在返回一个新的`State`状态，包含了可读的容器状态。
