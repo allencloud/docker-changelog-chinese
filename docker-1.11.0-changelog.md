@@ -136,7 +136,7 @@
 * Docker现在开始通过containerd和runc来创建新的容器
 * 修复了Docker配置重新加载只检索配置文件中选项的问题
 * 当网络参数`--net=host`时，Docker现在允许为容器再设定一个hostname
-* 当`--privileged`和新的`--userns=host`参数呗指定时，Docker目前允许运行privileged容器时使用参数`--userns-remap`
+* 当`--privileged`和新的`--userns=host`参数被指定时，Docker目前允许运行privileged容器时使用参数`--userns-remap`
 * 当容器崩溃后重启时，修复了该情况下Docker不会清洗现场的Bug
 * 当重新加载配置文件，读到一个没有定义的配置项时，Docker将会报告这个错误，
 * 修复了Docker Daemon重启时，容器加载过程中依赖与插件的错误
@@ -146,7 +146,7 @@
 * `docker load`命令新添加了一个`--quiet`参数，来使得缓解运行输出
 * 修复了IPv6点对点通信时的邻点发现问题
 * 修复了如果容器通过无效参数启动时，清理过程中有可能出现的运行恐慌
-* 修复了当运行终端呗关闭之后，容器不能被停止的Bug
+* 修复了当运行终端被关闭之后，容器不能被停止的Bug
 
 ## 安全
 
