@@ -14,7 +14,7 @@
 以下是Docker 1.11.0版本的完整变更日志。
 
 ## 重要提示
-使用Docker 1.11时，和往常有很大不同的是，现在Linux平台上Docker的安装，包括4个不同的二进制文件，它们分别是：docker, docker-containerd, docker-containerd-shim 以及 docker-runc。如果在你的环境中，有一些脚本是强依赖于单独一个的docker二进制文件，使用前需要确认更新这些脚本。和Docker Daemon的交互依然和以前保持不变，而其他部分的二进制文件的使用则可以认为对用户透明。另外，在Windows平台上，二进制文件依然以单独的docker.exe形式存在。
+使用Docker 1.11.0时，和往常有很大不同的是，现在Linux平台上Docker的安装，包括4个不同的二进制文件，它们分别是：docker, docker-containerd, docker-containerd-shim 以及 docker-runc。如果在你的环境中，有一些脚本是强依赖于单独一个的docker二进制文件，使用前需要确认更新这些脚本。和Docker Daemon的交互依然和以前保持不变，而其他部分的二进制文件的使用则可以认为对用户透明。另外，在Windows平台上，二进制文件依然以单独的docker.exe形式存在。
 
 
 ## 镜像构建模块 （Builder）
