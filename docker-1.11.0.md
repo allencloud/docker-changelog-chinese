@@ -1,5 +1,18 @@
 # Docker 1.11.0 变更日志
 
+春节过后，时隔两个月，Docker的又一个大版本1.11.0发布，除了功能的不断完善之外，该版本最大的看点无疑在于Docker Daemon的架构由原来一个模块，现在拆分为4个独立的模块组成，
+
+* docker
+* containerd
+* docker-containerd-shim
+* docker-runc
+
+关于这部分的实现与价值，DaoCloud的Docker工程师将会在后续深层次披露。
+
+作为在生产环境中深度使用Docker的科技型公司，DaoCloud同时也踊跃参与Docker软件的开源社区，为Docker贡献代码，其中本次docker 1.11.0版本的变更日志中，有关info信息的现实，配置文件加载的验证，请求返回码的更正等多个pr，均由DaoCloud的工程师孙宏亮完成实现并合并。
+
+以下是Docker 1.11.0版本的完整变更日志。
+
 ## 重要提示
 使用Docker 1.11时，和往常有很大不同的是，现在Linux平台上Docker的安装，包括4个不同的二进制文件，它们分别是：docker, docker-containerd, docker-containerd-shim 以及 docker-runc。如果在你的环境中，有一些脚本是强依赖于单独一个的docker二进制文件，使用前需要确认更新这些脚本。和Docker Daemon的交互依然和以前保持不变，而其他部分的二进制文件的使用则可以认为对用户透明。另外，在Windows平台上，二进制文件依然以单独的docker.exe形式存在。
 
@@ -114,7 +127,26 @@
 * 修复了Docker配置文件中的Registry服务参数没有被正常考虑的问题
 * 修复了exec和resize操作有可能造成的临界区数据访问冲突问题
 * 修复了在docker事件中，没有正确考虑的纳秒计算问题
-* 
+* 修复了当传入一个64位ID时，Docker命令的处理问题
+* Docker会返回一个204 status code，当删除网络成功的时候
+* 修复了杀死进程时该进程已经自己退出时，Docker Daemon有可能无限期等待的Bug
+* devicemapper驱动开始支持参数`dm.min_free_space`,如果映射的设备剩余空间到达了设定值，那么新设备的创建也会被禁止
+* Docker现在支持通过参数`--security-opt=no-new-privileges`,禁止容器内的进程获取新的privilege的权限
+* 带有参数`--device`启动一个容器时，现在将会重新解析符号链接
+* Docker现在开始通过containerd和runc来创建新的容器
+* 修复了Docker配置重新加载只检索配置文件中选项的问题
+* 当网络参数`--net=host`时，Docker现在允许为容器再设定一个hostname
+* 当`--privileged`和新的`--userns=host`参数呗指定时，Docker目前允许运行privileged容器时使用参数`--userns-remap`
+* 当容器崩溃后重启时，修复了该情况下Docker不会清洗现场的Bug
+* 目前Docker将会报告一个错误，当重新加载配置文件时，读到一个没有定义的配置项
+* 修复了Docker Daemon重启时，容器加载过程中依赖与插件的错误
+* `docker update`操作支持更新一个容器的重启策略
+* `docker inspect`现在返回一个新的`State`状态，包含了可读的容器状态。
+* Docker开始支持限制容器的运行进程个数，一旦容器的PID Cgroups被启动的话，可以通过参数`pids-limit`来实现，当然这需要Linux内核版本的支持
+* `docker load`命令新添加了一个`--quiet`参数，来使得缓解运行输出
+* 修复了IPv6点对点通信时的邻点发现问题
+* 修复了如果容器通过无效参数启动时，清理过程中有可能出现的运行恐慌
+* 修复了当运行终端呗关闭之后，容器不能被停止的Bug
 
 ## 安全
 
