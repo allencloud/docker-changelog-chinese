@@ -32,7 +32,7 @@ Docker 1.12.0将在DockerCon 2016前后发布。
 + 为`create`,`run`,`network connect`命令添加`--link-local-ip`flag参数，来指定一个容器的本地连接地址
 
 ## 试验性质的功能（experimental）
-+ 实现新的`plugin`命令来管理各种插件，同时实现了改命令下的子命令`install`,`enbale`,`disable`,`rm`,`inspect`,`set`
++ 实现新的`plugin`命令来管理各种插件，同时实现了该命令下的子命令`install`,`enbale`,`disable`,`rm`,`inspect`,`set`
 
 ## Docker Engine API(v1.24)
 + 为`docker images --filter`命令添加两种类型的过滤筛选`before`和`after`
