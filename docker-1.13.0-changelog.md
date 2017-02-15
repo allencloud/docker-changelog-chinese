@@ -82,20 +82,101 @@
 
 ## API (v1.25)和客户端变化
 
-*
-*
-*
-*
-*
-*
-*
-*
-*
-*
+* 支持从一个compose文件来执行`docker stack deploy`命令
+* 实现运行中的容器checkpoint和restore的功能，不过为试验版功能
+* 为`docker info`添加`--format`的命令行参数
+* 从`docker volume create`命令中删除`--name`参数
+* 添加`docker stack ls`
+* 为`docker ps`命令添加一个`is-task`的过滤参数
+* 为`docker service create`添加一个`--env-file`的命令行参数
+* 为`docker stats`命令添加一个`--format`命令行参数
+* 在Swarm Mode中，将`docker node ps`默认指向自身这个节点 （由本人Allen贡献）
+* 在`docker service create`中添加命令行参数`--group`
+* 为 service/node/stack ps的输出添加`--no-trunc`命令行参数
+* 添加日志到`ContainerAttachOptions`, 如此一来Go语言的客户端有能力发起获取容器日志的请求，作为attach进程的部分输出
+* 允许客户端与低版本的docker引擎通信
+* 当容器的状态是Removal In Progress时，docker引擎将此状态通知客户端
+* 为`/info`API节点添加`isolation`的字段
+* 为`/info`API节点添加`userns`的字段
+* 不允许在service API的访问请求中指定同时指定两个Service Mode（由本人Allen贡献）
+* 在API访问节点`containers/create`中添加使用更常规以及安全的方式指定挂载的功能
+* 允许顶级的命令`docker inspect`来获取所有类型的docker资源，如容器，网络，存储卷，镜像等
+* 为`docker run`和`docker create`命令添加`--cpus`参数以控制CPU计算资源，同时在`HostConfig`中添加`NanoCPUs`
+* 允许用户在`docker run`和`docker create`的时候，取消`--entrypoint`的原有配置
+* 为了满足更好的一致性，重构了CLI命令行，添加了命令`docker container`和`docker image`
+* 从`docker service ls`的显示结果中删除了`COMMAND`列
+* 为`docker events`命令添加了`--format`参数
+* 允许`docker node ps`命令指定多个不同的节点
+* 限制`docker images`命令输出结果精确到小数点后两位
+* 为`docker run`命令添加`--dns-option`命令行参数
+* 在镜像commit事件中添加镜像ID
+* 在`docker info`中添加外部二进制文件的信息
+* 在`docker info`中添加`Manager Addresses`的信息
+* 为`docker images`命令添加一个信息的索引过滤
 
 ## Docker引擎运行时
 
+* 添加一个`--experimental`的daemon命令行参数来支持试验版本的功能，而是将这些功能通过一个独立的构建版本来提供
+* 添加一个`--shutdown-timeout`的daemon命令行参数来指定默认的超时时间（秒），从在dameon退出前可以优雅的停止容器
+* 添加一个`--shutdown-timeout`的参数来为单个容器指定停止命令的超时时间（秒）
+* 为Docker 引擎添加一个新的命令行参数`--userland-proxy-path`,允许配置userland proxy,而不是使用硬编码的docker-proxy
+* 为dockerd添加一个daemon端的命令行参数`--init`，另外在`docker run`的时候，使用tini这一可以清理僵尸进程的init进程作为pid为1的进程
+* 为docker引擎添加一个命令行参数`--init-path`来允许配置`docker-init`二进制文件的地址
+* 支持允许热加载`insecure-registry`（由本人Allen贡献）
+* 为Windows上的docker引擎支持选项`storage-size`
+* 提高`docker run --rm`命令的可靠性，实现方式为将`--rm`的实现从客户端移至daemon端
+* 支持参数 `--cpu-rt-period` 和 `--cpu-rt-runtime`, 允许当内核中`CONFIG_RT_GROUP_SCHED`被启动时，容器有能力运行实时线程
+* 允许并行的容器停止，暂停，解除暂停
+* 为overlay2存储驱动实现XFS限额
+* 为service、task的过滤，修复部分/完整的问题
+* 允许docker引擎运行在一个特定的用户名空间内 
+* 修复了一个资源竞争问题，当使用device mapper存储驱动时，设备延迟删除与恢复设备
+* 在Windows平台上支持命令`docker stats`
+* 当`--userns=host`时，允许使用`--pid=host`和`--net=host`
+* （试验版本）添加 Prometheus metrics 输出，输出的维度有容器，镜像和daemon操作
+* 修复了`NetworkDisabled=true`时, `docker stats`会存在的错误
+* 在Windows平台上支持`docker top`命令
+* 记录exec进程的PID
+* 添加通过`getent`寻找user/groups的支持
+* 添加新的`docker system`命令，包含 `df`和`prune`子命令，可以实现系统的资源管理，同时也包括`docker {container, image, volume, network} prune`子命令 
+* 修复了一个bug，容器不能被停止或者杀死，当使用devicemapper时，设置了xfs的max_retries 从 0 到 ENOSPC
+* 修复了在CentOS上使用devicemapper时`docker cp`命令拷贝到容器存储卷时会出现的错误
+* 提高overlay(2)存储驱动的优先级
+* 添加`--seccomp-profile`的docker daemon命令行参数，来指定一个seccomp的路径来覆盖原先的默认路径
+* 修复了当 `--default-ulimit`被设置到daemon时，docker inspect不会先ulimit的错误
+* 在`docker exec -t`命令中添加对环境变量 `TERM`的支持
+* 在`docker kill`命令上记录容器`--stop-signal`的设置
+
 ## Swarm Mode 编排
+
+* 添加secret管理
+* 添加对于服务选项（hostname, mounts和环境变量）的支持
+* 在`docker service inspect --pretty`中显示服务模式（由本人Allen贡献）
+* 通过显示较短的task ID来使得`docker service ps`的输出更能令人接受
+* 将 `docker node ps`默认指向当前节点（由本人Allen贡献）
+* 为服务创建`docker create`添加`--dns`,`--dns-opt`和`--dns-search`
+* 为`docker service update`添加 `--force`参数
+* 在命令`docker service create`和`docker service update`中添加`--health-*`和`--no-healthcheck`命令行参数
+* 为`docker service ps`命令添加`-q`参数
+* 在`docker service ls`的显示结果中显示全局服务的数量
+* 从`docker service update`命令中删除命令行参数`--name`。这个命令行参数只适用于命令`docker service create`
+* 修复了因为短暂的网络问题，工作节点有可能存在的失效bug
+* 添加支持健康感知的负载均衡和DNS记录
+* 为`docker service create`命令添加`--hostname`参数
+* 为`docker service create`命令添加`--host`命令，为`docker service update`命令添加`--host-add`和`--host-rm`参数
+* 为`docker service create/update`命令添加`--tty`命令行参数
+* 自动监测、存储、暴露节点的IP地址，一旦被管理者节点发现
+* 加密余下的管理者节点的密钥和raft数据
+* 为`docker service update`命令添加参数`--update-max-failure-ratio`,`--update-monitor`和`--rollback`
+* 修复了在容器内部运行`docker swarm init`命令时的网络地址自动发现
+* （试验版功能）添加命令`docker service logs`来支持查看一个服务的日志
+* 通过digest来ping镜像，当`docker service create`和`docker service update`
+* 为raft的快照功能，添加了自定义配置的选项`--max-snapshots`和`--snapshot-interval`
+* 不要尝试重新下载镜像，当镜像已经通过digest被pin之后
+* 在Windows平台上支持Swarm Mode
+* 允许hostname在`docker service update`时被更新
+* 支持v2版本的插件机制
+* 为服务添加内容验证安全机制
 
 ## 存储卷
 
