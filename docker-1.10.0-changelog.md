@@ -1,4 +1,7 @@
 # Docker 1.10.0 Changelog
+
+英文链接地址：[docker-1.10.0 CHANGELOG.md](https://github.com/moby/moby/blob/v1.10.0/CHANGELOG.md)。
+
 Docker粉们，是否还记得上一个Docker大版本的发布是什么时候？如果已经模糊的话，小编告诉你，是4个月前的10月14号。如今，就在中国的春节即将到来之际，Docker官方发布了跨时代的Docker 1.10.0版本，着实为猴年的到来献上了最大的一份礼。
 
 如果说Docker 1.9.0的overlay网络意味着Docker集群能力方面质的飞跃，那么这次发布的Docker 1.10.0更是多个方面实现重大突破。总体而言，小编认为，意义非凡的变化与演进，以及看点，主要有以下这几方面：

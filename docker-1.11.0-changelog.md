@@ -1,5 +1,7 @@
 # Docker 1.11.0 变更日志
 
+英文链接地址：[docker-1.11.0 CHANGELOG.md](https://github.com/moby/moby/blob/v1.11.0/CHANGELOG.md)。
+
 春节过后，时隔两个月，Docker的又一个大版本1.11.0发布，除了功能的不断完善之外，该版本最大的看点无疑在于Docker Daemon的架构由原来一个模块，现在拆分为4个独立的模块组成，
 
 * docker
