@@ -1,5 +1,7 @@
 # Docker 17.04.0-ce 变更日志
 
+英文链接地址：[docker-17.04.0-ce CHANGELOG.md](https://github.com/moby/moby/blob/v17.04.0-ce/CHANGELOG.md)。
+
 ## 镜像构建器
 
 * 在构建镜像时，取消容器产生的日志

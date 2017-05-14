@@ -1,5 +1,7 @@
 # Docker 1.12重磅推出，容器领域划时代
 
+英文链接地址：[docker-1.12.0 CHANGELOG.md](https://github.com/moby/moby/blob/v1.12.0/CHANGELOG.md)。
+
 Docker 1.12 在今年6月下旬的DockerCon 2016上就暂露头角，然而，却在7月底的今天才发布，真可谓"千呼万唤始出来"。如果了解Docker的Roadmap，就会发现此次大版本的变革，用“里程碑”和“划时代”来形容绝对不为过。总结而言，重大版本的亮点绝不容错过，归纳如下：
 
 * 原生支持编排功能，Swarm集群蜕变为SwarmKit，融入Docker Engine
