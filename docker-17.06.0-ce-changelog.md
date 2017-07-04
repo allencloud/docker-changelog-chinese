@@ -41,7 +41,7 @@
 
 * 为Docker Swarm模式下的服务，添加本地网络的支持，比如 macvlan，ipvlan，bridge，以及 host
 * 在服务创建过程中，允许用户传入网络驱动相关的驱动选项；
-* 允许用户使用参数`--data-path-addr`来隔离 Swarm 控制层的数据流程与应用传输层的数据流量
+* 允许用户使用参数`--data-path-addr`来隔离 Swarm 网络控制层与应用传输层之间的网络通信；
 * 对Docker Daemon自带的服务发现功能，进行了一系列的提高。
 
 ## Docker 运行时
